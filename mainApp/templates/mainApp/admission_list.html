@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions</title>
+</head>
+
+<body>
+
+    <h1>Admission List</h1>
+
+    <p>Welcome, {{ request.user.username }}</p>
+
+    {% if admissions %}
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Room</th>
+                <th>Room Type</th>
+                <th>Admission Time</th>
+                <th>Discharge Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for admission in admissions %}
+            <tr>
+                <td>{{ admission.id }}</td>
+                <td>{{ admission.patientID.name }}</td>
+                <td>{{ admission.roomID.id }}</td>
+                <td>{{ admission.roomID.type }}</td>
+                <td>{{ admission.startTime }}</td>
+                <td>
+                    {% if admission.endTime %}
+                    {{ admission.endTime }}
+                    {% else %}
+                    Still Admitted
+                    {% endif %}
+                </td>
+                <td>
+    <a href="{% url 'admission_edit' admission.id %}">Edit</a>
+    |
+    <a href="{% url 'admission_delete' admission.id %}">Delete</a>
+</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No admissions found.</p>
+    {% endif %}
+
+    <br>
+
+    <a href="{% url 'admission_create' %}">Add New Admission</a>
+
+    <br><br>
+
+    <a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+
+</html>

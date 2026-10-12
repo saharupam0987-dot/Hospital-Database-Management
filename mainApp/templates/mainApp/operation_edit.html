@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Operation</title>
+</head>
+
+<body>
+    <h1>Edit Operation</h1>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Operation Name:</label><br>
+        <input type="text" name="opName" value="{{ operation.opName }}" required>
+        <br><br>
+
+        <label>Patient:</label><br>
+        <select name="patientID" required>
+            {% for patient in patients %}
+            <option value="{{ patient.id }}" {% if patient.id == operation.patientID.id %}selected{% endif %}>
+                {{ patient.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Operation Theatre:</label><br>
+        <select name="opTheatre" required>
+            {% for room in rooms %}
+            <option value="{{ room.id }}" {% if room.id == operation.opTheatre.id %}selected{% endif %}>
+                Room {{ room.id }} - {{ room.type }}
+            </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Doctors:</label><br>
+        <select name="doctorID" multiple required>
+            {% for doctor in doctors %}
+            <option value="{{ doctor.id }}" {% if doctor in operation.doctorID.all %}selected{% endif %}>
+                {{ doctor.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <p>Hold Ctrl while clicking to select multiple doctors.</p>
+
+        <label>Start Time:</label><br>
+        <input type="datetime-local" name="startTime" value="{{ operation.startTime|date:'Y-m-d\TH:i' }}" required>
+        <br><br>
+
+        <label>End Time:</label><br>
+        <input type="datetime-local" name="endTime" value="{{ operation.endTime|date:'Y-m-d\TH:i' }}" required>
+        <br><br>
+
+        <label>Report Generation Time:</label><br>
+        <input type="datetime-local" name="reportGenerationTime"
+            value="{{ operation.reportGenerationTime|date:'Y-m-d\TH:i' }}" required>
+        <br><br>
+
+        <label>Operation Report:</label><br>
+
+        {% if operation.operationReport %}
+        <p>
+            Current Report:
+            <a href="{{ operation.operationReport.url }}" target="_blank">
+                View Report
+            </a>
+        </p>
+        {% endif %}
+
+        <input type="file" name="operationReport">
+        <p>Leave the file field empty to keep the existing report.</p>
+        <br>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <br>
+    <a href="{% url 'operation_list' %}">Back to Operation List</a>
+</body>
+
+</html>

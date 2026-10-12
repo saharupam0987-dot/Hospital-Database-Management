@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Front Desk Dashboard</title>
+</head>
+
+<body>
+
+    <h1>Front Desk Dashboard</h1>
+
+    <p>Welcome, {{ request.user.username }}.</p>
+
+    <p>You have Front Desk Operator access.</p>
+
+    <a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+</html>

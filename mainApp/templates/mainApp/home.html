@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hospital Management System</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background-color: #0d6efd;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px 40px 60px;
+        }
+
+        .card {
+            background: white;
+            width: 220px;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: #0d6efd;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2>Hospital Management System</h2>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/admin/">Admin</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to Our Hospital</h1>
+
+        <p>
+            Logged in as: <strong>{{ request.user.username }}</strong>
+            | Role: <strong>{{ profile.get_role_display }}</strong>
+        </p>
+
+        <p>
+            Manage patients, doctors, appointments,
+            admissions, tests and operations in one place.
+        </p>
+
+
+        <p>
+            <a href="{% url 'operation_list' %}">Operation List</a>
+        </p>
+
+        <p>
+            <a href="{% url 'room_list' %}">Room List</a>
+        </p>
+
+        <p>
+            <a href="{% url 'doctor_list' %}">Doctor List</a>
+        </p>
+
+        <p>
+            <a href="{% url 'patient_list' %}">Patient List</a>
+        </p>
+
+        <p>
+            <a href="{% url 'appointment_list' %}">Appointment List</a>
+        </p>
+
+        <p>
+            <a href="{% url 'admission_list' %}">Admission List</a>
+        </p>
+
+        <p>
+            <a href="{% url 'test_list' %}">Test List</a>
+        </p>
+
+
+
+    </section>
+
+    <section class="cards">
+
+        <div class="card">
+            <h3>Doctors</h3>
+            <p>Manage doctor information and departments.</p>
+        </div>
+
+        <div class="card">
+            <h3>Patients</h3>
+            <p>Manage patient records and information.</p>
+        </div>
+
+        <div class="card">
+            <h3>Appointments</h3>
+            <p>Schedule and manage patient appointments.</p>
+        </div>
+
+        <div class="card">
+            <h3>Admissions</h3>
+            <p>Manage patient admissions and rooms.</p>
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        <p>Hospital Management System</p>
+    </footer>
+
+</body>
+
+</html>

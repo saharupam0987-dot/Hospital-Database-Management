@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Test</title>
+</head>
+
+<body>
+
+    <h1>Edit Test</h1>
+
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Test Name:</label><br>
+        <input type="text" name="testName" value="{{ test.testName }}" required>
+
+        <br><br>
+
+        <label>Patient:</label><br>
+        <select name="patientID" required>
+            {% for patient in patients %}
+            <option value="{{ patient.id }}" {% if patient.id==test.patientID.id %}selected{% endif %}>
+                {{ patient.name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label>Scheduled Time:</label><br>
+        <input type="datetime-local" name="scheduledTime" value="{{ test.scheduledTime|date:'Y-m-d\TH:i' }}" required>
+
+        <br><br>
+
+        <label>Report Generation Time:</label><br>
+        <input type="datetime-local" name="reportGenerationTime"
+            value="{{ test.reportGenerationTime|date:'Y-m-d\TH:i' }}" required>
+
+        <br><br>
+
+        <label>Test Report:</label><br>
+
+        {% if test.testReport %}
+        <p>
+            Current Report:
+            <a href="{{ test.testReport.url }}" target="_blank">
+                View Report
+            </a>
+        </p>
+        {% endif %}
+
+        <input type="file" name="testReport">
+
+        <br><br>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'test_list' %}">Back to Test List</a>
+
+</body>
+
+</html>

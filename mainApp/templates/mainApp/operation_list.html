@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation List</title>
+</head>
+
+<body>
+    <h1>Operation List</h1>
+
+    <p>Welcome, {{ request.user.username }}</p>
+
+    {% if operations %}
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Operation Name</th>
+                <th>Patient</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Operation Theatre</th>
+                <th>Doctors</th>
+                <th>Operation Report</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for operation in operations %}
+            <tr>
+                <td>{{ operation.id }}</td>
+                <td>{{ operation.opName }}</td>
+                <td>{{ operation.patientID.name }}</td>
+                <td>{{ operation.startTime }}</td>
+                <td>{{ operation.endTime }}</td>
+                <td>{{ operation.opTheatre }}</td>
+                <td>
+                    {% for doctor in operation.doctorID.all %}
+                    {{ doctor.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                    No doctors assigned
+                    {% endfor %}
+                </td>
+
+                <td>
+                    {% if operation.operationReport %}
+                    <a href="{{ operation.operationReport.url }}" target="_blank">
+                        View Report
+                    </a>
+                    {% else %}
+                    No Report
+                    {% endif %}
+                </td>
+
+
+                <td>
+                    <a href="{% url 'operation_edit' operation.id %}">Edit</a>
+                    |
+                    <a href="{% url 'operation_delete' operation.id %}">Delete</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No operations found.</p>
+    {% endif %}
+
+    <br>
+
+    <br>
+    <a href="{% url 'operation_create' %}">Add New Operation</a>
+    <br><br>
+
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+
+</html>

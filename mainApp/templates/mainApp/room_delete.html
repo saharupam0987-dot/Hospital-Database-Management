@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Room</title>
+</head>
+<body>
+    <h1>Delete Room</h1>
+
+    <p>
+        Are you sure you want to delete
+        <strong>Room {{ room.id }} - {{ room.type }}</strong>?
+    </p>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% else %}
+        <p>This action cannot be undone.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete Room</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'room_list' %}">Cancel and Go Back</a>
+</body>
+</html>

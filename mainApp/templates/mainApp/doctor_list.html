@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor List</title>
+</head>
+
+<body>
+    <h1>Hospital Doctor List</h1>
+
+    <p>Welcome, {{ request.user.username }}</p>
+
+    {% if doctors %}
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Doctor ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Office Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor.id }}</td>
+                <td>{{ doctor.name }}</td>
+                <td>{{ doctor.department }}</td>
+                <td>{{ doctor.phoneNumber|default:"—" }}</td>
+                <td>{{ doctor.email|default:"—" }}</td>
+                <td>{{ doctor.address|default:"—" }}</td>
+                <td>{{ doctor.officeNumber }}</td>
+
+                <td>
+                    <a href="{% url 'doctor_edit' doctor.id %}">Edit</a>
+                    |
+                    <a href="{% url 'doctor_delete' doctor.id %}">Delete</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No doctors found.</p>
+    {% endif %}
+
+    <br>
+
+    <br>
+    <a href="{% url 'doctor_create' %}">Add New Doctor</a>
+    <br><br>
+    <a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+
+</html>

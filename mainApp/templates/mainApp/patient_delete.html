@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Patient</title>
+</head>
+<body>
+    <h1>Delete Patient</h1>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% else %}
+        <p>
+            Are you sure you want to delete
+            <strong>{{ patient.name }}</strong>?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete Patient</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'patient_list' %}">Back to Patient List</a>
+</body>
+</html>

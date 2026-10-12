@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Operation</title>
+</head>
+
+<body>
+    <h1>Add New Operation</h1>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Operation Name:</label><br>
+        <input type="text" name="opName" required>
+        <br><br>
+
+        <label>Patient:</label><br>
+        <select name="patientID" required>
+            <option value="">Select Patient</option>
+            {% for patient in patients %}
+            <option value="{{ patient.id }}">{{ patient.name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Operation Theatre:</label><br>
+        <select name="opTheatre" required>
+            <option value="">Select Room</option>
+            {% for room in rooms %}
+            <option value="{{ room.id }}">
+                Room {{ room.id }} - {{ room.type }}
+            </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Doctors:</label><br>
+        <select name="doctorID" multiple required>
+            {% for doctor in doctors %}
+            <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+            {% endfor %}
+        </select>
+        <p>Hold Ctrl (Windows) while clicking to select multiple doctors.</p>
+
+        <label>Start Time:</label><br>
+        <input type="datetime-local" name="startTime" required>
+        <br><br>
+
+        <label>End Time:</label><br>
+        <input type="datetime-local" name="endTime" required>
+        <br><br>
+
+        <label>Report Generation Time:</label><br>
+        <input type="datetime-local" name="reportGenerationTime" required>
+        <br><br>
+
+        <label>Operation Report:</label><br>
+        <input type="file" name="operationReport">
+        <br><br>
+
+        <button type="submit">Create Operation</button>
+    </form>
+
+    <br>
+    <a href="{% url 'operation_list' %}">Back to Operation List</a>
+</body>
+
+</html>

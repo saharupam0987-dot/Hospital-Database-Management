@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+</head>
+
+<body>
+
+    <h1>Appointment List</h1>
+
+    <p>
+        Welcome, {{ request.user.username }}
+    </p>
+
+    {% if appointments %}
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Priority</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.id }}</td>
+                <td>{{ appointment.patientID.name }}</td>
+                <td>{{ appointment.doctorID.name }}</td>
+                <td>{{ appointment.startTime }}</td>
+                <td>{{ appointment.endTime }}</td>
+                <td>{{ appointment.priority }}</td>
+                <td>
+                    <a href="{% url 'appointment_edit' appointment.id %}">Edit</a>
+                    |
+                    <a href="{% url 'appointment_delete' appointment.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <p>No appointments found.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'appointment_create' %}">Add New Appointment</a>
+    <br><br>
+    <a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+
+</html>
